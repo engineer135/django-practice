@@ -140,6 +140,33 @@ nothing to commit, working tree clean
 위에 있는 참조 url을 확인하자.
 재미있는 케이스가 많다.
 
+4. gitHub에 올리기
+일단 remote 레파지토리를 셋팅해야 한다.
+$ git remote add origin https://github.com/engineer135/django-practice.git
+실행하면 아무것도 안뜬다. (에러가 안났으니 된건가;;)
+
+그리고 remote 레파지토리에 push한다.
+$ git push -u origin master
+반응이 없는데 조금 기다리면, GitHub 로그인창이 뜬다.
+그런데 아래와 같은 에러가 났다.
+
+To https://github.com/engineer135/django-practice.git
+ ! [rejected]        master -> master (fetch first)
+error: failed to push some refs to 'https://github.com/engineer135/django-practi
+ce.git'
+hint: Updates were rejected because the remote contains work that you do
+hint: not have locally. This is usually caused by another repository pushing
+hint: to the same ref. You may want to first integrate the remote changes
+hint: (e.g., 'git pull ...') before pushing again.
+hint: See the 'Note about fast-forwards' in 'git push --help' for details.
+
+GitHub 저장소를 만들때, README.md 파일을 만들었고, 이게 충돌이 난 것 같다.
+pull 명령어로 원격 저장소 내용을 가져와서 합치고 다시 업로드해야한다.
+
+
+
+
+
 
 
 
