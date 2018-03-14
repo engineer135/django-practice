@@ -164,17 +164,58 @@ GitHub 저장소를 만들때, README.md 파일을 만들었고, 이게 충돌�
 pull 명령어로 원격 저장소 내용을 가져와서 합치고 다시 업로드해야한다.
 
 
+하지만 또 다른 에러가... 어찌저찌 구글링 후 다시 올리는데 성공.
 
+D:\djangogirls>git pull origin master
+warning: no common commits
+remote: Counting objects: 8, done.
+remote: Compressing objects: 100% (5/5), done.
+remote: Total 8 (delta 0), reused 0 (delta 0), pack-reused 0
+Unpacking objects: 100% (8/8), done.
+From https://github.com/engineer135/django-practice
+ * branch            master     -> FETCH_HEAD
+ * [new branch]      master     -> origin/master
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Counting objects: 9481, done.
+Delta compression using up to 4 threads.
+Compressing objects: 100% (8377/8377), done.
+Writing objects: 100% (9481/9481), done.
+Total 9481 (delta 2166), reused 0 (delta 0)
+Removing duplicate objects: 100% (256/256), done.
+fatal: refusing to merge unrelated histories
 
+D:\djangogirls>git push origin master
+To https://github.com/engineer135/django-practice.git
+ ! [rejected]        master -> master (non-fast-forward)
+error: failed to push some refs to 'https://github.com/engineer135/django-practi
+ce.git'
+hint: Updates were rejected because the tip of your current branch is behind
+hint: its remote counterpart. Integrate the remote changes (e.g.
+hint: 'git pull ...') before pushing again.
+hint: See the 'Note about fast-forwards' in 'git push --help' for details.
 
+D:\djangogirls>git pull origin master
+From https://github.com/engineer135/django-practice
+ * branch            master     -> FETCH_HEAD
+fatal: refusing to merge unrelated histories
 
+D:\djangogirls>git pull origin master --allow-unrelated-histories
+From https://github.com/engineer135/django-practice
+ * branch            master     -> FETCH_HEAD
+Already up to date!
+Merge made by the 'recursive' strategy.
 
+D:\djangogirls>git push origin master
+Counting objects: 9474, done.
+Delta compression using up to 4 threads.
+Compressing objects: 100% (6208/6208), done.
+Writing objects: 100% (9474/9474), 16.76 MiB | 62.00 KiB/s, done.
+Total 9474 (delta 2166), reused 9472 (delta 2165)
+remote: Resolving deltas: 100% (2166/2166), done.
+To https://github.com/engineer135/django-practice.git
+   e28c62c..b6e3d01  master -> master
 
+D:\djangogirls>
 
-
-
-
-
-
-
-
+결국 성공!
