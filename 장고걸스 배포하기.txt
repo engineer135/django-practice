@@ -1,0 +1,81 @@
+db.sqlite3 파일을 이그노어 처리했습니다.
+PythonAnywhere는 다른 데이터베이스를 사용하기 때문에 저장소에 추가할 필요가 없습니다.
+
+1. GitHub에서 PythonAnywhere로 코드 가져오기
+PythonAnywhere 접속후 콘솔 > Bash 클릭하면 콘솔창이 뜹니다.
+
+git clone https://github.com/engineer135/django-practice.git
+원격 저장소 소스를 가져옵니다.
+
+tree django-practice
+파일 확인...
+
+2. 가상환경 생성
+그리고 로컬에서 했던 것처럼 가상환경(virtualenv)를 생성한다.
+가상환경은 pc마다 새로 생성을 해줘야하는건가..?
+그러고보니 myvenv까지 모두 GitHub에 올린 후 클론해서 실행했더니 안된 경험이 있긴 하다.
+아무튼..
+
+05:28 ~ $ cd django-practice/
+
+05:28 ~/django-practice (master)$ virtualenv --python=python3.6 myvenv
+Running virtualenv with interpreter /usr/bin/python3.6
+Using base prefix '/usr'
+New python executable in /home/everafterk/django-practice/myvenv/bin/python3.6
+Also creating executable in /home/everafterk/django-practice/myvenv/bin/python
+Installing setuptools, pip, wheel...done.
+가상환경 설정
+
+05:30 ~/django-practice (master)$ source myvenv/bin/activate
+(myvenv) 05:31 ~/django-practice (master)$ 
+가상환경 활성화
+
+3. 장고 설치
+
+(myvenv) 05:31 ~/django-practice (master)$ pip install django~=1.11.0
+Collecting django~=1.11.0  
+    Downloading Django-1.11.11-py2.py3-none-any.whl (6.9MB)
+        99% |████████████████████████████████| 6.9MB 27.8MB/s eta 0:00:01
+        100% |████████████████████████████████| 7.0MB 166kB/s 
+Collecting pytz (from django~=1.11.0)  
+    Downloading pytz-2018.3-py2.py3-none-any.whl (509kB)
+        100% |████████████████████████████████| 512kB 1.5MB/s 
+Installing collected packages: pytz, django
+Successfully installed django-1.11.11 pytz-2018.3
+장고 설치까지 완료!
+
+4. 데이터베이스 생성
+
+(myvenv) 05:34 ~/django-practice (master)$ python manage.py migrate
+(mvenv) $ python manage.py createsuperuser
+
+5. web app으로 블로그 배포!
+대쉬보드 > 웹 > add a new web app 클릭
+그리고 Manual configuration으로 진행한다. Django 선택보다 이게 더 좋다고 한다.
+
+6. 가상환경 설정
+Virtualenv: 섹션에 Enter path to a virtualenv, if desired 를 클릭!
+ /home/<your-username>/django-practice/myvenv/ 를 입력한다.
+
+7. WSGI 파일 설정
+WSGI 프로토콜은 파이썬을 이용한 웹사이트를 서비스하기 위한 표준입니다.
+우리가 만든 블로그를 PythonAnywhere에서 인식하게 하기 위해 WSGI 파일을 수정해야 합니다.
+상단 Code 섹션에 WSGI configuration file 경로가 있고 여기를 클릭하면 수정이 가능하다.
+모두 삭제 후 아래 내용을 붙여넣는다.
+
+import os
+import sys
+
+path = '/home/<your-PythonAnywhere-username>/my-first-blog'  # PythonAnywhere 계정으로 바꾸세요.
+if path not in sys.path:
+    sys.path.append(path)
+
+os.environ['DJANGO_SETTINGS_MODULE'] = 'mysite.settings'
+
+from django.core.wsgi import get_wsgi_application
+from django.contrib.staticfiles.handlers import StaticFilesHandler
+application = StaticFilesHandler(get_wsgi_application())
+
+그리고 Web 탭으로 돌아가서 Reload를 클릭하면 완료!
+
+확인 결과 이상 없이 잘 떴네요~
